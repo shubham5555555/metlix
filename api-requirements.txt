@@ -1,0 +1,210 @@
+# API Requirements for Metlix Furniture E-commerce Site
+
+## Base URL
+http://192.168.1.13:3005/v1/api
+
+## 1. Categories API ✅ (Already Implemented)
+GET /categories/list
+Response: Array of category objects with id, name, slug, description, image
+
+## 2. Products API (Required)
+GET /products/list
+Query Parameters:
+- page: number (pagination)
+- limit: number (items per page)
+- category: string (filter by category slug)
+- search: string (search products)
+- sort: string (price_asc, price_desc, name_asc, name_desc, rating_desc)
+- min_price: number
+- max_price: number
+
+Response:
+{
+  "products": [
+    {
+      "id": string,
+      "name": string,
+      "slug": string,
+      "description": string,
+      "price": number,
+      "originalPrice": number (optional),
+      "category": string,
+      "subcategory": string (optional),
+      "images": string[],
+      "colors": string[],
+      "materials": string[],
+      "features": string[],
+      "dimensions": {
+        "width": number,
+        "height": number,
+        "depth": number,
+        "unit": string
+      },
+      "rating": number,
+      "reviewCount": number,
+      "inStock": boolean,
+      "isNew": boolean (optional),
+      "createdAt": string,
+      "updatedAt": string
+    }
+  ],
+  "pagination": {
+    "page": number,
+    "limit": number,
+    "total": number,
+    "totalPages": number
+  }
+}
+
+GET /products/:slug
+Response: Single product object (same structure as above)
+
+## 3. Quote System API (Required)
+POST /quotes/request
+Body:
+{
+  "customerInfo": {
+    "name": string,
+    "email": string,
+    "phone": string,
+    "company": string (optional),
+    "address": {
+      "street": string,
+      "city": string,
+      "state": string,
+      "zipCode": string,
+      "country": string
+    }
+  },
+  "items": [
+    {
+      "productId": string,
+      "productName": string,
+      "quantity": number,
+      "selectedColor": string (optional),
+      "customizations": string (optional)
+    }
+  ],
+  "projectDetails": {
+    "projectType": string, // "residential", "commercial", "hospitality"
+    "timeline": string, // "immediate", "1-3 months", "3-6 months", "6+ months"
+    "budget": string, // "under-10k", "10k-25k", "25k-50k", "50k-100k", "100k+"
+    "description": string,
+    "specialRequirements": string (optional)
+  },
+  "preferredContactMethod": string, // "email", "phone", "both"
+  "preferredContactTime": string (optional)
+}
+
+Response:
+{
+  "quoteId": string,
+  "status": "submitted",
+  "estimatedResponse": string, // "24-48 hours"
+  "message": string
+}
+
+GET /quotes/:quoteId/status
+Response:
+{
+  "quoteId": string,
+  "status": string, // "submitted", "in_review", "quoted", "accepted", "declined"
+  "submittedAt": string,
+  "updatedAt": string,
+  "estimatedTotal": number (optional),
+  "notes": string (optional)
+}
+
+## 4. Contact/Inquiry API (Required)
+POST /contact/inquiry
+Body:
+{
+  "name": string,
+  "email": string,
+  "phone": string (optional),
+  "subject": string,
+  "message": string,
+  "inquiryType": string // "general", "product", "quote", "support"
+}
+
+Response:
+{
+  "inquiryId": string,
+  "status": "received",
+  "message": string
+}
+
+## 5. Newsletter/Updates API (Optional)
+POST /newsletter/subscribe
+Body:
+{
+  "email": string,
+  "name": string (optional),
+  "preferences": string[] // ["new_products", "sales", "design_tips"]
+}
+
+Response:
+{
+  "status": "subscribed",
+  "message": string
+}
+
+## 6. Reviews API (Optional - for future enhancement)
+GET /products/:productId/reviews
+Query Parameters:
+- page: number
+- limit: number
+- sort: string (newest, oldest, rating_high, rating_low)
+
+POST /reviews
+Body:
+{
+  "productId": string,
+  "customerName": string,
+  "email": string,
+  "rating": number, // 1-5
+  "title": string,
+  "review": string,
+  "verified": boolean (optional)
+}
+
+## 7. Search/Autocomplete API (Optional)
+GET /search/suggestions
+Query Parameters:
+- q: string (search query)
+- limit: number (default: 10)
+
+Response:
+{
+  "suggestions": [
+    {
+      "type": string, // "product", "category"
+      "name": string,
+      "slug": string,
+      "image": string (optional)
+    }
+  ]
+}
+
+## Error Response Format
+All APIs should return consistent error responses:
+{
+  "error": {
+    "code": string,
+    "message": string,
+    "details": object (optional)
+  }
+}
+
+## Authentication
+- No authentication required for public APIs (products, categories, quotes, contact)
+- All APIs should support CORS for frontend integration
+- Rate limiting recommended for quote and contact endpoints
+
+## Priority Implementation Order:
+1. Products API (GET /products/list, GET /products/:slug) - HIGH
+2. Quote System API (POST /quotes/request) - HIGH  
+3. Contact API (POST /contact/inquiry) - MEDIUM
+4. Newsletter API - LOW
+5. Reviews API - LOW (can use static data initially)
+6. Search API - LOW (can use client-side filtering initially)
