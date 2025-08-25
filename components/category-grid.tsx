@@ -50,8 +50,8 @@ export function CategoryGrid({ showTitle = true, maxItems, className = "" }: Cat
   const displayCategories = maxItems ? categories.slice(0, maxItems) : categories
 
   return (
-    <section className={`py-24 bg-muted/30 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className={`py-24 bg-muted/30 rounded-2xl ${className}`}>
+      <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8">
         {showTitle && (
           <div className="text-center mb-16 animate-in fade-in duration-1000">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">

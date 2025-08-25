@@ -39,7 +39,7 @@ export default function HomePage() {
                 href="/"
                 className="text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-200"
               >
-                <span className="font-serif-italic">Metlix</span>
+                <span className="font-serif-italic">Matlix</span>
               </Link>
             </div>
 
@@ -208,25 +208,25 @@ export default function HomePage() {
       </section>
 
       {/* Collections Section - Now using API-powered CategoryGrid */}
-      <section id="collections" className="py-24 bg-muted/30">
+      <section id="collections" className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-in fade-in duration-1000">
+          {/* <div className="text-center mb-16 animate-in fade-in duration-1000">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
               <span className="font-serif-italic">Signature</span> Collections
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Each piece in our collection represents the perfect harmony of form, function, and timeless design.
             </p>
-          </div>
+          </div> */}
           <CategoryGrid />
-          <div className="text-center mt-12 animate-in fade-in duration-1000 delay-500">
+          {/* <div className="text-center mt-12 animate-in fade-in duration-1000 delay-500">
             <Link href="/products">
               <Button size="lg" className="group hover:scale-105 transition-all duration-300 hover:shadow-lg">
                 View All Products
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
               </Button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -289,7 +289,7 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-muted/30">
+      <section id="contact" className="py-24 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-in fade-in duration-1000">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">
@@ -365,7 +365,7 @@ export default function HomePage() {
                 href="/"
                 className="text-xl font-bold hover:scale-105 transition-transform duration-200 inline-block"
               >
-                <span className="font-serif-italic">Metlix</span>
+                <span className="font-serif-italic">Matlix</span>
               </Link>
               <p className="text-background/80">
                 Crafting sophisticated living spaces with premium furniture and timeless design.
@@ -426,7 +426,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-background/20 mt-12 pt-8 text-center text-background/60">
-            <p>&copy; 2024 Metlix. All rights reserved.</p>
+            <p>&copy; 2024 Matlix. All rights reserved.</p>
           </div>
         </div>
       </footer>

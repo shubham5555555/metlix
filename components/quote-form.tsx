@@ -88,38 +88,38 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
     
     if (step === 1) {
       if (!formData.customerInfo?.name?.trim()) {
-        newErrors.name = "Name should not be empty"
+        newErrors.name = "Name is required"
       }
       if (!formData.customerInfo?.email?.trim()) {
-        newErrors.email = "Email should not be empty"
+        newErrors.email = "Email is required"
       } else if (!validateEmail(formData.customerInfo.email)) {
-        newErrors.email = "Email must be a valid email address"
+        newErrors.email = "Please enter a valid email address"
       }
       if (!formData.customerInfo?.phone?.trim()) {
-        newErrors.phone = "Phone should not be empty"
+        newErrors.phone = "Phone number is required"
       } else if (!validatePhone(formData.customerInfo.phone)) {
-        newErrors.phone = "Phone must be a valid phone number"
+        newErrors.phone = "Please enter a valid phone number"
       }
     }
     
     if (step === 2) {
       if (!formData.customerInfo?.address?.street?.trim()) {
-        newErrors.street = "Street address should not be empty"
+        newErrors.street = "Street address is required"
       }
       if (!formData.customerInfo?.address?.city?.trim()) {
-        newErrors.city = "City should not be empty"
+        newErrors.city = "City is required"
       }
       if (!formData.customerInfo?.address?.state?.trim()) {
-        newErrors.state = "State should not be empty"
+        newErrors.state = "State is required"
       }
       if (!formData.customerInfo?.address?.zipCode?.trim()) {
-        newErrors.zipCode = "ZIP code should not be empty"
+        newErrors.zipCode = "ZIP code is required"
       }
     }
     
     if (step === 3) {
       if (!formData.projectDetails?.description?.trim()) {
-        newErrors.description = "Project description should not be empty"
+        newErrors.description = "Project description is required"
       }
     }
     
@@ -239,16 +239,20 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
 
   if (isSubmitted) {
     return (
-      <Card className="max-w-md mx-auto">
+      <Card className="w-full max-w-md mx-auto shadow-lg">
         <CardContent className="p-6 text-center">
-          <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-3" />
+          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+            <CheckCircle className="h-8 w-8 text-green-600" />
+          </div>
           <h2 className="text-xl font-bold mb-2">Quote Request Submitted!</h2>
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-sm text-muted-foreground mb-4">
             Thank you for your interest. We'll review your request and get back to you within 24-48 hours.
           </p>
-          <p className="text-xs text-muted-foreground mb-4">
-            Quote ID: <span className="font-mono font-medium">{quoteId}</span>
-          </p>
+          <div className="bg-muted p-3 rounded-md mb-4">
+            <p className="text-xs text-muted-foreground">
+              Quote ID: <span className="font-mono font-medium text-foreground">{quoteId}</span>
+            </p>
+          </div>
           <div className="flex flex-col gap-2">
             <Button onClick={onClose} size="sm" className="w-full">
               Close
@@ -263,45 +267,46 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4">
+    <div className="w-full max-w-4xl mx-auto px-4 py-6">
       {/* Progress Bar */}
-      <div className="mb-6">
+      <div className="mb-8">
         <div className="flex justify-between mb-2">
           {steps.map((step) => (
             <div 
               key={step.id} 
-              className={`text-xs ${currentStep >= step.id ? 'font-bold' : 'text-muted-foreground'}`}
+              className={`text-xs ${currentStep >= step.id ? 'font-bold text-primary' : 'text-muted-foreground'}`}
             >
-              {step.id}
+              {step.title}
             </div>
           ))}
         </div>
         <Progress value={(currentStep / steps.length) * 100} className="h-2" />
         <div className="text-xs text-center mt-2 text-muted-foreground">
-          Step {currentStep} of {steps.length}: {steps[currentStep-1].title}
+          Step {currentStep} of {steps.length}
         </div>
       </div>
 
       <form onSubmit={handleSubmit}>
         {/* Step 1: Contact Information */}
         {currentStep === 1 && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="w-full shadow-md">
+            <CardHeader className="pb-3 border-b">
               <CardTitle className="text-lg flex items-center gap-2">
                 <User className="h-5 w-5" />
                 Contact Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
+            <CardContent className="pt-6 space-y-4">
+              <div className="space-y-4">
                 <div>
-                  <Label htmlFor="name" className="text-xs">Full Name *</Label>
+                  <Label htmlFor="name" className="text-sm font-medium mb-2 block">Full Name *</Label>
                   <Input
                     id="name"
                     value={formData.customerInfo?.name || ""}
                     onChange={(e) => updateCustomerInfo("name", e.target.value)}
                     required
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your full name"
                   />
                   {errors.name && (
                     <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -311,14 +316,15 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="email" className="text-xs">Email Address *</Label>
+                  <Label htmlFor="email" className="text-sm font-medium mb-2 block">Email Address *</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.customerInfo?.email || ""}
                     onChange={(e) => updateCustomerInfo("email", e.target.value)}
                     required
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your email address"
                   />
                   {errors.email && (
                     <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -328,9 +334,9 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="phone" className="text-xs">Phone Number *</Label>
+                  <Label htmlFor="phone" className="text-sm font-medium mb-2 block">Phone Number *</Label>
                   <div className="flex">
-                    <div className="flex items-center justify-center px-3 border border-r-0 rounded-l-md bg-muted text-sm">
+                    <div className="flex items-center justify-center px-3 border border-r-0 rounded-l-md bg-muted text-sm h-10">
                       +91
                     </div>
                     <Input
@@ -339,7 +345,7 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                       value={formData.customerInfo?.phone?.replace('+91 ', '') || ""}
                       onChange={(e) => updateCustomerInfo("phone", "+91 " + e.target.value.replace(/\D/g, ''))}
                       required
-                      className="h-9 text-sm rounded-l-none"
+                      className="h-10 text-sm rounded-l-none"
                       placeholder="Enter your phone number"
                     />
                   </div>
@@ -351,12 +357,13 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="company" className="text-xs">Company (Optional)</Label>
+                  <Label htmlFor="company" className="text-sm font-medium mb-2 block">Company (Optional)</Label>
                   <Input
                     id="company"
                     value={formData.customerInfo?.company || ""}
                     onChange={(e) => updateCustomerInfo("company", e.target.value)}
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your company name"
                   />
                 </div>
               </div>
@@ -366,22 +373,23 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
 
         {/* Step 2: Address */}
         {currentStep === 2 && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="w-full shadow-md">
+            <CardHeader className="pb-3 border-b">
               <CardTitle className="text-lg flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
                 Project Address
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-6 space-y-4">
               <div>
-                <Label htmlFor="street" className="text-xs">Street Address *</Label>
+                <Label htmlFor="street" className="text-sm font-medium mb-2 block">Street Address *</Label>
                 <Input
                   id="street"
                   value={formData.customerInfo?.address.street || ""}
                   onChange={(e) => updateAddress("street", e.target.value)}
                   required
-                  className="h-9 text-sm"
+                  className="h-10 text-sm"
+                  placeholder="Enter your street address"
                 />
                 {errors.street && (
                   <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -392,13 +400,14 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="city" className="text-xs">City *</Label>
+                  <Label htmlFor="city" className="text-sm font-medium mb-2 block">City *</Label>
                   <Input
                     id="city"
                     value={formData.customerInfo?.address.city || ""}
                     onChange={(e) => updateAddress("city", e.target.value)}
                     required
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your city"
                   />
                   {errors.city && (
                     <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -408,13 +417,14 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="state" className="text-xs">State *</Label>
+                  <Label htmlFor="state" className="text-sm font-medium mb-2 block">State *</Label>
                   <Input
                     id="state"
                     value={formData.customerInfo?.address.state || ""}
                     onChange={(e) => updateAddress("state", e.target.value)}
                     required
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your state"
                   />
                   {errors.state && (
                     <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -426,13 +436,14 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="zipCode" className="text-xs">ZIP Code *</Label>
+                  <Label htmlFor="zipCode" className="text-sm font-medium mb-2 block">ZIP Code *</Label>
                   <Input
                     id="zipCode"
                     value={formData.customerInfo?.address.zipCode || ""}
                     onChange={(e) => updateAddress("zipCode", e.target.value)}
                     required
-                    className="h-9 text-sm"
+                    className="h-10 text-sm"
+                    placeholder="Enter your ZIP code"
                   />
                   {errors.zipCode && (
                     <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -442,13 +453,13 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="country" className="text-xs">Country *</Label>
+                  <Label htmlFor="country" className="text-sm font-medium mb-2 block">Country *</Label>
                   <Select
                     value={formData.customerInfo?.address.country}
                     onValueChange={(value) => updateAddress("country", value)}
                   >
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue />
+                    <SelectTrigger className="h-10 text-sm">
+                      <SelectValue placeholder="Select country" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="India" className="text-sm">India</SelectItem>
@@ -467,45 +478,45 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
 
         {/* Step 3: Project Details */}
         {currentStep === 3 && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="w-full shadow-md">
+            <CardHeader className="pb-3 border-b">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Building className="h-5 w-5" />
                 Project Details
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-6 space-y-4">
               <div>
-                <Label className="text-xs">Project Type *</Label>
+                <Label className="text-sm font-medium mb-2 block">Project Type *</Label>
                 <RadioGroup
                   value={formData.projectDetails?.projectType}
                   onValueChange={(value) => updateProjectDetails("projectType", value)}
-                  className="flex flex-col sm:flex-row gap-4 mt-2"
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2"
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="residential" id="residential" />
-                    <Label htmlFor="residential" className="text-sm">Residential</Label>
+                    <Label htmlFor="residential" className="text-sm cursor-pointer">Residential</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="commercial" id="commercial" />
-                    <Label htmlFor="commercial" className="text-sm">Commercial</Label>
+                    <Label htmlFor="commercial" className="text-sm cursor-pointer">Commercial</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="hospitality" id="hospitality" />
-                    <Label htmlFor="hospitality" className="text-sm">Hospitality</Label>
+                    <Label htmlFor="hospitality" className="text-sm cursor-pointer">Hospitality</Label>
                   </div>
                 </RadioGroup>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="timeline" className="text-xs">Timeline *</Label>
+                  <Label htmlFor="timeline" className="text-sm font-medium mb-2 block">Timeline *</Label>
                   <Select
                     value={formData.projectDetails?.timeline}
                     onValueChange={(value) => updateProjectDetails("timeline", value)}
                   >
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue />
+                    <SelectTrigger className="h-10 text-sm">
+                      <SelectValue placeholder="Select timeline" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="immediate" className="text-sm">Immediate (ASAP)</SelectItem>
@@ -516,13 +527,13 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="budget" className="text-xs">Budget Range *</Label>
+                  <Label htmlFor="budget" className="text-sm font-medium mb-2 block">Budget Range *</Label>
                   <Select
                     value={formData.projectDetails?.budget}
                     onValueChange={(value) => updateProjectDetails("budget", value)}
                   >
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue />
+                    <SelectTrigger className="h-10 text-sm">
+                      <SelectValue placeholder="Select budget range" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="under-10k" className="text-sm">Under ₹10k</SelectItem>
@@ -536,15 +547,15 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
               </div>
 
               <div>
-                <Label htmlFor="description" className="text-xs">Project Description *</Label>
+                <Label htmlFor="description" className="text-sm font-medium mb-2 block">Project Description *</Label>
                 <Textarea
                   id="description"
                   placeholder="Describe your project, space requirements, style preferences..."
                   value={formData.projectDetails?.description || ""}
                   onChange={(e) => updateProjectDetails("description", e.target.value)}
-                  rows={3}
+                  rows={4}
                   required
-                  className="text-sm"
+                  className="text-sm resize-vertical"
                 />
                 {errors.description && (
                   <div className="text-red-500 text-xs flex items-center gap-1 mt-1">
@@ -555,14 +566,14 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
               </div>
 
               <div>
-                <Label htmlFor="specialRequirements" className="text-xs">Special Requirements (Optional)</Label>
+                <Label htmlFor="specialRequirements" className="text-sm font-medium mb-2 block">Special Requirements (Optional)</Label>
                 <Textarea
                   id="specialRequirements"
                   placeholder="Any special requirements or custom modifications..."
                   value={formData.projectDetails?.specialRequirements || ""}
                   onChange={(e) => updateProjectDetails("specialRequirements", e.target.value)}
-                  rows={2}
-                  className="text-sm"
+                  rows={3}
+                  className="text-sm resize-vertical"
                 />
               </div>
             </CardContent>
@@ -571,47 +582,47 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
 
         {/* Step 4: Contact Preferences */}
         {currentStep === 4 && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="w-full shadow-md">
+            <CardHeader className="pb-3 border-b">
               <CardTitle className="text-lg">Contact Preferences</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-6 space-y-4">
               <div>
-                <Label className="text-xs">Preferred Contact Method *</Label>
+                <Label className="text-sm font-medium mb-2 block">Preferred Contact Method *</Label>
                 <RadioGroup
                   value={formData.preferredContactMethod}
                   onValueChange={(value) => setFormData((prev) => ({ ...prev, preferredContactMethod: value as any }))}
-                  className="flex flex-col sm:flex-row gap-4 mt-2"
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2"
                 >
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="email" id="email-contact" />
-                    <Label htmlFor="email-contact" className="text-sm flex items-center gap-2">
+                    <Label htmlFor="email-contact" className="text-sm flex items-center gap-2 cursor-pointer">
                       <Mail className="h-4 w-4" />
                       Email
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="phone" id="phone-contact" />
-                    <Label htmlFor="phone-contact" className="text-sm flex items-center gap-2">
+                    <Label htmlFor="phone-contact" className="text-sm flex items-center gap-2 cursor-pointer">
                       <Phone className="h-4 w-4" />
                       Phone
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 p-3 border rounded-md hover:bg-accent">
                     <RadioGroupItem value="both" id="both-contact" />
-                    <Label htmlFor="both-contact" className="text-sm">Both</Label>
+                    <Label htmlFor="both-contact" className="text-sm cursor-pointer">Both</Label>
                   </div>
                 </RadioGroup>
               </div>
 
               <div>
-                <Label htmlFor="contactTime" className="text-xs">Preferred Contact Time (Optional)</Label>
+                <Label htmlFor="contactTime" className="text-sm font-medium mb-2 block">Preferred Contact Time (Optional)</Label>
                 <Input
                   id="contactTime"
                   placeholder="e.g., Weekdays 9AM-5PM IST"
                   value={formData.preferredContactTime || ""}
                   onChange={(e) => setFormData((prev) => ({ ...prev, preferredContactTime: e.target.value }))}
-                  className="h-9 text-sm"
+                  className="h-10 text-sm"
                 />
               </div>
             </CardContent>
@@ -620,63 +631,63 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
 
         {/* Step 5: Review */}
         {currentStep === 5 && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="w-full shadow-md">
+            <CardHeader className="pb-3 border-b">
               <CardTitle className="text-lg">Review Your Information</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="pt-6 space-y-6">
               <div className="space-y-3">
-                <h3 className="font-medium text-sm">Contact Information</h3>
-                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <h3 className="font-medium text-base border-b pb-2">Contact Information</h3>
+                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="text-muted-foreground">Name:</div>
-                  <div>{formData.customerInfo?.name}</div>
+                  <div className="font-medium">{formData.customerInfo?.name}</div>
                   <div className="text-muted-foreground">Email:</div>
-                  <div>{formData.customerInfo?.email}</div>
+                  <div className="font-medium">{formData.customerInfo?.email}</div>
                   <div className="text-muted-foreground">Phone:</div>
-                  <div>{formData.customerInfo?.phone}</div>
+                  <div className="font-medium">{formData.customerInfo?.phone}</div>
                   <div className="text-muted-foreground">Company:</div>
-                  <div>{formData.customerInfo?.company || "N/A"}</div>
+                  <div className="font-medium">{formData.customerInfo?.company || "N/A"}</div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-medium text-sm">Address</h3>
+                <h3 className="font-medium text-base border-b pb-2">Address</h3>
                 <div className="text-sm">
-                  <div>{formData.customerInfo?.address.street}</div>
-                  <div>{formData.customerInfo?.address.city}, {formData.customerInfo?.address.state} {formData.customerInfo?.address.zipCode}</div>
-                  <div>{formData.customerInfo?.address.country}</div>
+                  <div className="font-medium">{formData.customerInfo?.address.street}</div>
+                  <div className="text-muted-foreground">{formData.customerInfo?.address.city}, {formData.customerInfo?.address.state} {formData.customerInfo?.address.zipCode}</div>
+                  <div className="text-muted-foreground">{formData.customerInfo?.address.country}</div>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-medium text-sm">Project Details</h3>
-                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <h3 className="font-medium text-base border-b pb-2">Project Details</h3>
+                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="text-muted-foreground">Type:</div>
-                  <div className="capitalize">{formData.projectDetails?.projectType}</div>
+                  <div className="font-medium capitalize">{formData.projectDetails?.projectType}</div>
                   <div className="text-muted-foreground">Timeline:</div>
-                  <div>{formData.projectDetails?.timeline}</div>
+                  <div className="font-medium">{formData.projectDetails?.timeline}</div>
                   <div className="text-muted-foreground">Budget:</div>
-                  <div>{formData.projectDetails?.budget}</div>
+                  <div className="font-medium">{formData.projectDetails?.budget}</div>
                 </div>
-                <div className="mt-2">
-                  <div className="text-muted-foreground text-sm">Description:</div>
-                  <div className="text-sm mt-1">{formData.projectDetails?.description}</div>
+                <div className="mt-3">
+                  <div className="text-muted-foreground text-sm mb-1">Description:</div>
+                  <div className="text-sm p-3 bg-muted rounded-md">{formData.projectDetails?.description}</div>
                 </div>
                 {formData.projectDetails?.specialRequirements && (
-                  <div className="mt-2">
-                    <div className="text-muted-foreground text-sm">Special Requirements:</div>
-                    <div className="text-sm mt-1">{formData.projectDetails.specialRequirements}</div>
+                  <div className="mt-3">
+                    <div className="text-muted-foreground text-sm mb-1">Special Requirements:</div>
+                    <div className="text-sm p-3 bg-muted rounded-md">{formData.projectDetails.specialRequirements}</div>
                   </div>
                 )}
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-medium text-sm">Contact Preferences</h3>
-                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <h3 className="font-medium text-base border-b pb-2">Contact Preferences</h3>
+                <div className="text-sm grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="text-muted-foreground">Method:</div>
-                  <div className="capitalize">{formData.preferredContactMethod}</div>
+                  <div className="font-medium capitalize">{formData.preferredContactMethod}</div>
                   <div className="text-muted-foreground">Preferred Time:</div>
-                  <div>{formData.preferredContactTime || "Any time"}</div>
+                  <div className="font-medium">{formData.preferredContactTime || "Any time"}</div>
                 </div>
               </div>
             </CardContent>
@@ -684,13 +695,13 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
         )}
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-6 flex-col sm:flex-row gap-3">
+        <div className="flex justify-between mt-8 flex-col sm:flex-row gap-3">
           <Button 
             type="button" 
             variant="outline" 
             onClick={prevStep} 
             disabled={currentStep === 1}
-            className="flex items-center gap-1 order-2 sm:order-1"
+            className="flex items-center gap-1 order-2 sm:order-1 w-full sm:w-auto"
           >
             <ChevronLeft className="h-4 w-4" />
             Previous
@@ -700,13 +711,17 @@ export function QuoteForm({ initialItems = [], onSuccess, onClose }: QuoteFormPr
             <Button 
               type="button" 
               onClick={nextStep}
-              className="flex items-center gap-1 order-1 sm:order-2"
+              className="flex items-center gap-1 order-1 sm:order-2 w-full sm:w-auto"
             >
               Next
               <ChevronRight className="h-4 w-4" />
             </Button>
           ) : (
-            <Button type="submit" disabled={isSubmitting} className="min-w-28 order-1 sm:order-2">
+            <Button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="min-w-28 order-1 sm:order-2 w-full sm:w-auto"
+            >
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

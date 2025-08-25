@@ -18,24 +18,24 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  title: "Metlix - Premium Furniture & Design",
+  title: "Matlix - Premium Furniture & Design",
   description: "Discover premium furniture and interior design solutions crafted for sophisticated living spaces.",
   generator: "v0.app",
   keywords: "luxury furniture, premium interior design, modern furniture, sophisticated living, home decor",
-  authors: [{ name: "Metlix" }],
-  creator: "Metlix",
-  publisher: "Metlix",
+  authors: [{ name: "Matlix" }],
+  creator: "Matlix",
+  publisher: "Matlix",
   openGraph: {
-    title: "Metlix - Premium Furniture & Design",
+    title: "Matlix - Premium Furniture & Design",
     description: "Discover premium furniture and interior design solutions crafted for sophisticated living spaces.",
     url: "https://luxeinteriors.com",
-    siteName: "Metlix",
+    siteName: "Matlix",
     images: [
       {
         url: "/luxury-modern-living-room.png",
         width: 1200,
         height: 630,
-        alt: "Metlix - Premium Furniture Collection",
+        alt: "Matlix - Premium Furniture Collection",
       },
     ],
     locale: "en_US",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Metlix - Premium Furniture & Design",
+    title: "Matlix - Premium Furniture & Design",
     description: "Discover premium furniture and interior design solutions crafted for sophisticated living spaces.",
     images: ["/luxury-modern-living-room.png"],
   },

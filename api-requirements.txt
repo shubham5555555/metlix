@@ -1,4 +1,4 @@
-# API Requirements for Metlix Furniture E-commerce Site
+# API Requirements for Matlix Furniture E-commerce Site
 
 ## Base URL
 http://192.168.1.13:3005/v1/api

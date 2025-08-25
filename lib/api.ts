@@ -26,7 +26,7 @@ export interface Category {
   subcategories?: string[]
 }
 
-const API_BASE_URL = "http://192.168.1.13:3005/v1/api"
+const API_BASE_URL = "http://localhost:3005/v1/api"
 
 export async function fetchCategories(): Promise<Category[]> {
   const controller = new AbortController()

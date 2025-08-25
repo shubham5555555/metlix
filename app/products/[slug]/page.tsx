@@ -109,7 +109,7 @@ export default function ProductPage() {
               href="/"
               className="text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-200"
             >
-              <span className="font-serif-italic">Metlix</span>
+              <span className="font-serif-italic">Matlix</span>
             </Link>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -193,7 +193,7 @@ export default function ProductPage() {
                 {product.originalPrice && (
                   <div className="absolute top-4 right-4">
                     <Badge variant="destructive">
-                      Save ${(product.originalPrice - product.price).toLocaleString()}
+                      Save Rs {(product.originalPrice - product.price).toLocaleString()}
                     </Badge>
                   </div>
                 )}
@@ -239,7 +239,7 @@ export default function ProductPage() {
 
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    <div className="flex">
+                    {/* <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
@@ -248,9 +248,9 @@ export default function ProductPage() {
                           }`}
                         />
                       ))}
-                    </div>
-                    <span className="font-medium">{product.rating}</span>
-                    <span className="text-muted-foreground">({product.reviewCount} reviews)</span>
+                    </div> */}
+                    {/* <span className="font-medium">{product.rating}</span>
+                    <span className="text-muted-foreground">({product.reviewCount} reviews)</span> */}
                   </div>
                   <Badge variant={product.inStock ? "default" : "secondary"}>
                     {product.inStock ? "In Stock" : "Out of Stock"}
@@ -634,7 +634,7 @@ export default function ProductPage() {
                 href="/"
                 className="text-xl font-bold hover:scale-105 transition-transform duration-200 inline-block"
               >
-                <span className="font-serif-italic">Metlix</span>
+                <span className="font-serif-italic">Matlix</span>
               </Link>
               <p className="text-background/80">
                 Crafting sophisticated living spaces with premium furniture and timeless design.
@@ -686,7 +686,7 @@ export default function ProductPage() {
             </div>
           </div>
           <div className="border-t border-background/20 mt-12 pt-8 text-center text-background/60">
-            <p>&copy; 2024 Metlix. All rights reserved.</p>
+            <p>&copy; 2024 Matlix. All rights reserved.</p>
           </div>
         </div>
       </footer>

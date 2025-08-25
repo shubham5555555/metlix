@@ -75,7 +75,7 @@ export default function CategoryPage() {
               href="/"
               className="text-2xl font-bold tracking-tight hover:scale-105 transition-transform duration-200"
             >
-              <span className="font-serif-italic">Metlix</span>
+              <span className="font-serif-italic">Matlix</span>
             </Link>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -286,9 +286,9 @@ export default function CategoryPage() {
                   <CardContent className={`p-6 ${viewMode === "list" ? "flex-1" : ""}`}>
                     <div className="flex items-center gap-2 mb-2">
                       <div className="flex items-center">
-                        <Star className="h-4 w-4 fill-primary text-primary" />
+                        {/* <Star className="h-4 w-4 fill-primary text-primary" />
                         <span className="text-sm font-medium ml-1">{product.rating}</span>
-                        <span className="text-sm text-muted-foreground ml-1">({product.reviewCount})</span>
+                        <span className="text-sm text-muted-foreground ml-1">({product.reviewCount})</span> */}
                       </div>
                       {product.subcategory && (
                         <Badge variant="outline" className="text-xs">
@@ -399,7 +399,7 @@ export default function CategoryPage() {
                 href="/"
                 className="text-xl font-bold hover:scale-105 transition-transform duration-200 inline-block"
               >
-                <span className="font-serif-italic">Metlix</span>
+                <span className="font-serif-italic">Matlix</span>
               </Link>
               <p className="text-background/80">
                 Crafting sophisticated living spaces with premium furniture and timeless design.
@@ -451,7 +451,7 @@ export default function CategoryPage() {
             </div>
           </div>
           <div className="border-t border-background/20 mt-12 pt-8 text-center text-background/60">
-            <p>&copy; 2024 Metlix. All rights reserved.</p>
+            <p>&copy; 2024 Matlix. All rights reserved.</p>
           </div>
         </div>
       </footer>
